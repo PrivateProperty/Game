@@ -1,63 +1,17 @@
-<!--<div class="row alerts-container" data-ng-controller="AlertsCtrl" data-ng-show="alerts.length">
-  <div class="col-xs-12">
-    <uib-alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
-  </div>
-</div>-->
-
 <div class="row">
-    <!--<div class="col-lg-3 col-md-6 col-xs-12">
-        <rd-widget>
-            <rd-widget-body>
-                <div class="widget-icon green pull-left">
-                    <i class="fa fa-users"></i>
-                </div>
-                <div class="title">80</div>
-                <div class="comment">Users</div>
-            </rd-widget-body>
-        </rd-widget>
-    </div>
-    <div class="col-lg-3 col-md-6 col-xs-12">
-        <rd-widget>
-            <rd-widget-body>
-                <div class="widget-icon red pull-left">
-                    <i class="fa fa-tasks"></i>
-                </div>
-                <div class="title">16</div>
-                <div class="comment">Servers</div>
-            </rd-widget-body>
-        </rd-widget>
-    </div>
-    <div class="col-lg-3 col-md-6 col-xs-12">
-        <rd-widget>
-            <rd-widget-body>
-                <div class="widget-icon orange pull-left">
-                    <i class="fa fa-sitemap"></i>
-                </div>
-                <div class="title">225</div>
-                <div class="comment">Documents</div>
-            </rd-widget-body>
-        </rd-widget>
-    </div>-->
-    <div class="row" ng-controller="MapCtrl" >
+
+    <div class="row" ng-controller="MapCtrl">
+
         <div class=" col-xs-12">
             <div id="map" style="width: auto; height: 400px"></div>
-
         </div>
-        <div class=" col-xs-12"  ng-hide= " hide() ">
 
-            <!--<div class="widget-icon blue pull-left">
-                <i class="fa fa-support"></i>
-            </div>
-            <div class="title">62</div>
-            <div class="comment">Tickets</div>-->
-
-            <h5>Введите название города на русском языке. У Вас есть 1 минута. Текущий город   {{gameService.cityAll[gameService.cityAll.length-1]}} </h5>
-            <h5>Ваш ход  <input type="text" ng-model="FromUser" value="Ммм" placeholder=" Название города">
-                <!--<input type="submit" value="Отправить" ng-click="checkCity(FromUser)">-->
+        <div class=" col-xs-12" ng-hide=" hide() ">
+            <h5>Введите название города на русском языке с ЗАГЛАВНОЙ буквы.  {{gameService.warn}}<h4>{{gameService.lastCity}}</h4></h5>
+            <h5>Ваш ход <input type="text" ng-model="FromUser" value="Ммм" placeholder=" Название города">
                 <button class="btn btn-sm btn-info" ng-click="checkCity(FromUser)">Продолжить</button>
             </h5>
-
-
         </div>
+
     </div>
 </div>

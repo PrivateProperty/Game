@@ -1,6 +1,6 @@
 <div class="row" ng-controller="TableCtrl">
     <div class="col-lg-12">
-        <h3> {{gameService.won}}</h3>
+        <h3> {{gameService.won}} <button class="btn  btn-danger"   ng-hide="hide()" ng-click="reStart()"> Еще раз </button></h3>
     </div>
 
     <div class="col-lg-6">
