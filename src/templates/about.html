@@ -1,0 +1,27 @@
+<div class="row" ng-controller="AboutCTRL">
+    <div class="col-lg-12" align="center" style="padding: 0 90px;">
+        <h3 align="center">Здравствуйте уважаемые дамы и господа!!!</h3><br>
+        <h4>Это игра ГОРОДА. Первым город говорит пользователь затем компьютер таким образом, чтобы название следующего
+            города начиналось на последнюю букву предыдущего. Игра продолжается до тех пор, пока у одного из участников
+            не закончатся варианты. С более подробными правилами игры Вы можете ознакомиться
+            <a href="https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%80%D0%BE%D0%B4%D0%B0_(%D0%B8%D0%B3%D1%80%D0%B0)"
+               target="_blank"> <b>здесь</b> </a>
+        </h4>
+        <h4><a href="#" target="_blank"> <b>Здесь</b> </a> Вы можете познакомиться с создателем этого сайта:)</h4><br>
+        <h4>Если у Вас возникли вопросы или появились предложения, то пишите на <b>{{recipient + at + dotcom}}</b> или
+            нажмите на самолетик, чтобы перейти в почтовый клиент по умолчанию.
+        </h4><br>
+        <button id="send" ng-click="send()"
+
+                style=" outline: none; border: none; background: none;"><img
+                src="/img/send_.png" width=50px height=50px
+                onclick="style = 'transform: scale(1.2)'"
+                onmouseover="style = 'transform: rotate(360deg); transition: transform .5s'"
+                onmouseout =" style = 'transform: rotate(360); transition: transform .5s'"
+
+        />
+        </button>
+
+    </div>
+</div> <!--onmouseover="style = 'transform: scale(1.2)'"
+onmouseout="style = 'transform: scale(1)'"-->

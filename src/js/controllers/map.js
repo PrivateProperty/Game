@@ -7,3 +7,19 @@
 // clearTimeout(setTimer)
 // window.location.reload();
 // window.location.href = '#/'
+angular.module('RDash')
+    .controller('AboutCTRL', ['$scope', AboutCTRL]);
+
+function AboutCTRL($scope) {
+    $scope.recipient="5625210";
+    $scope.at = String.fromCharCode(64);
+    $scope.dotcom="gmail.com";
+    $scope.mail="mailto:";
+
+$scope.send = function () {
+    setTimeout(function() {
+        window.open($scope.mail+$scope.recipient+$scope.at+$scope.dotcom);
+    }, 500);
+};
+
+}

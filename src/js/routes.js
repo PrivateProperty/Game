@@ -22,10 +22,6 @@ angular.module('RDash').config(['$stateProvider', '$urlRouterProvider',
             .state('about', {
                 url: '/about',
                 templateUrl: 'templates/about.html'
-            })
-            .state('support', {
-                url: '/support',
-                templateUrl: 'templates/support.html'
             });
     }
 ]);
