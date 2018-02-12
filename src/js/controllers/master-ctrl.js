@@ -441,7 +441,93 @@ function MapCtrl($scope, gameService) {
         myMap.behaviors.disable('scrollZoom');
         myMap.controls.remove('searchControl');
         myMap.controls.remove('trafficControl');
+
     });
+
+
+    $scope.speech;
+    $scope.recognizeSpeach = function () {
+        // media.webspeech.recognition.enable = true;
+        if ('webkitSpeechRecognition' in window) {
+            var recognition = new webkitSpeechRecognition();
+            // media.webspeech.recognition.enable = true;
+            recognition.interimResults = false;
+            recognition.lang = 'ru';
+
+            recognition.onresult = function (event) {
+                var result = event.results[event.resultIndex];
+                $scope.speech = result[0].transcript.charAt(0).toUpperCase() + result[0].transcript.slice(1);
+                console.clear();
+                console.log(result[0].transcript);
+
+            };
+            var d;
+            $scope.color = true;
+            if ($scope.color) {
+                /*document.getElementById('color').onmouseover="none";
+                 document.getElementById('color').onmouseout="none"*/
+                /*.style.backgroundColor = '#db0ffe'*/
+                console.log("цвет")
+            }
+            recognition.onend = function () {
+
+                document.getElementById('txt').value = $scope.speech||"";
+                console.log('Крайний ' + gameService.lastCity);
+                // document.getElementById('color').style.backgroundColor = '#db0ffe';
+                $scope.color = true/*'#5bc0de'*/;
+                // document.getElementById('color').style="background-color: #5bc0de; border-radius: 50px;";
+                document.getElementById('color').style.backgroundColor = '#5bc0de';
+                console.log("конец");
+
+                document.getElementById('color').onmouseover = "this.style.backgroundColor='#f00';";
+                document.getElementById('color').onmouseout = "this.style.backgroundColor='#5bc0de';";
+                var I = document.getElementById('txt');
+                console.log(I.value);
+            };
+
+
+            var start = function () {
+                console.log("Start");
+                document.getElementById('color').style.backgroundColor = '#f00';
+
+                $scope.color = false/*'#f00'*/;
+                recognition.start();
+
+                // document.getElementById('color').onmouseover="none";
+                // document.getElementById('color').onmouseout="none"
+            };
+            start();
+            console.log("1234567890-");
+        } else alert('В этом браузере не поддерживаеться ввод текста через микрофон :(');
+
+    };
+
+    $scope.checkCity = function (cityX) {
+         cityX = cityX || $scope.speech;
+        if (cityX) {
+            if (cityX.slice(0, 1) === cityX.slice(0, 1).toLowerCase()) {
+                alert(" Введите город с ЗАГЛАВНОЙ буквы ")
+            } else {
+                if ($scope.isCyrillic(cityX)) {
+                    if (gameService.cityAll.indexOf(cityX) > 0) {
+                        alert('Такой город уже был, введите другой')
+                    } else {
+                        $scope.game(cityX);
+                        $scope.reset();
+                    }
+                } else {
+                    alert(" Введите город на русском языке ")
+                }
+            }
+        } else {
+            alert("Вы ничего не ввели... ")
+        }
+
+    };
+
+    $scope.isCyrillic = function (text) {
+        return /[а-я]/i.test(text);
+    };
 
     $scope.game = function (fromUser) {
         if (gameService.cityAll[1]) {
@@ -459,33 +545,8 @@ function MapCtrl($scope, gameService) {
         $scope.compucterStep(fromUser);
     };
 
-    $scope.isCyrillic = function (text) {
-        return /[а-я]/i.test(text);
-    };
-
-    $scope.checkCity = function (cityX) {
-        if(cityX.slice(0, 1) === cityX.slice(0, 1).toLowerCase()){
-            alert("Введите город с ЗАГЛАВНОЙ буквы")
-       }else{
-            if ($scope.isCyrillic(cityX)) {
-                if (gameService.cityAll.indexOf(cityX) > 0) {
-                    alert('Такой город уже был, введите другой')
-                } else {
-                    $scope.game(cityX);
-                    $scope.reset();
-                }
-            } else {
-                alert(" Введите город на русском языке ")
-            }
-        }
-    };
-
     $scope.reset = function () {
         $scope.FromUser = '';
-    };
-
-    $scope.hide = function () {
-        if (gameService.won != "Текущий результат") return true
     };
 
     $scope.compucterStep = function (fromUser) {
@@ -498,8 +559,8 @@ function MapCtrl($scope, gameService) {
                 gameService.cityComputer.push(gameService.cityComputerAll[i]);
                 gameService.cityAll.push(gameService.cityComputerAll[i]);
                 gameService.cityComputerAll.splice(i, 1);
-                gameService.lastCity =  gameService.cityAll[gameService.cityAll.length - 1];
-                gameService.warn = " У Вас есть 1 минута. Текущий город  ";
+                gameService.lastCity = gameService.cityAll[gameService.cityAll.length - 1];
+                gameService.warn = " У Вас есть 1 минута. Текущий город ";
                 gameService.setTimer = setTimeout(function () {
                     gameService.won = ' В следующий раз повезет. Попробуй снова ';
                     $scope.hide();
@@ -514,6 +575,10 @@ function MapCtrl($scope, gameService) {
             }
         }
     };
+
+    $scope.hide = function () {
+        if (gameService.won != "Текущий результат") return true
+    };
 }
 
 function MasterCtrl($scope, $cookieStore) {
@@ -524,6 +589,7 @@ function MasterCtrl($scope, $cookieStore) {
 
     $scope.getWidth = function () {
         return window.innerWidth;
+
     };
 
     $scope.$watch($scope.getWidth, function (newValue, oldValue) {
@@ -541,10 +607,13 @@ function MasterCtrl($scope, $cookieStore) {
 
     $scope.toggleSidebar = function () {
         $scope.toggle = !$scope.toggle;
+
+
         $cookieStore.put('toggle', $scope.toggle);
+        // $scope.$apply();
     };
 
     window.onresize = function () {
-        $scope.$apply();
+        $scope.$apply()
     };
 }
