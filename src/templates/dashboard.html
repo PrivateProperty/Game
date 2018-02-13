@@ -7,18 +7,18 @@
         </div>
 
         <div class=" col-xs-12" ng-hide=" hide() ">
-           <!-- <h5>Введите название города на русском языке с ЗАГЛАВНОЙ буквы. {{gameService.warn}}<b>{{gameService.lastCity}}</b>
-            </h5>
-            <h5>Ваш ход
-                <button class="btn btn-sm btn-info" style="background-color: #5bc0de"
-                        onmouseover="this.style.backgroundColor='#f00';"
-                        onmouseout="this.style.backgroundColor='#5bc0de';"
-                        ng-click="recognizeSpeach()">Мик
-                </button>
-                <input type="text" id="txt" ng-model="FromUser" value="Vvv" placeholder=" Название города">
-                <button type="submit" class="btn btn-sm btn-info" ng-click="checkCity(FromUser)">Продолжить</button>
-                &lt;!&ndash;<p>Или введите с помощью микрофона</p><button class="btn btn-xs btn-info" ng-click="recognizeSpeach()">Микрофон</button>&ndash;&gt;
-            </h5>-->
+            <!-- <h5>Введите название города на русском языке с ЗАГЛАВНОЙ буквы. {{gameService.warn}}<b>{{gameService.lastCity}}</b>
+             </h5>
+             <h5>Ваш ход
+                 <button class="btn btn-sm btn-info" style="background-color: #5bc0de"
+                         onmouseover="this.style.backgroundColor='#f00';"
+                         onmouseout="this.style.backgroundColor='#5bc0de';"
+                         ng-click="recognizeSpeach()">Мик
+                 </button>
+                 <input type="text" id="txt" ng-model="FromUser" value="Vvv" placeholder=" Название города">
+                 <button type="submit" class="btn btn-sm btn-info" ng-click="checkCity(FromUser)">Продолжить</button>
+                 &lt;!&ndash;<p>Или введите с помощью микрофона</p><button class="btn btn-xs btn-info" ng-click="recognizeSpeach()">Микрофон</button>&ndash;&gt;
+             </h5>-->
 
             <h5>Введите название города на русском языке с ЗАГЛАВНОЙ буквы. {{gameService.warn}}<b>{{gameService.lastCity}}</b>
             </h5>
@@ -27,39 +27,49 @@
                 <div class="col-xs-4">
 
                     <div class="input-group">
-                         <span class="input-group-addon" style="background-color: inherit; border: none">
-                              <button id = "color" class="btn btn-xs btn-info"  style="background-color: #5bc0de; border-radius: 50px; outline: none;"
-
-
-
-                                      ng-click="recognizeSpeach()" >Mic<!-- onmouseover="this.style.backgroundColor='#f00';"
-                                      onmouseout="this.style.backgroundColor='#5bc0de';"-->
+                         <span class="input-group-addon"
+                               style="background-color: inherit; border: none; padding: 0 6px">
+                              <button class="btn btn-xs btn-info"
+                                      id="color"
+                                      ng-click="recognizeSpeach()"
+                                      style=" outline: none; border: none; background: none; padding: 3px; border-radius: 50%"><!--style="background-color: #5bc0de; border-radius: 50px; outline: none;"-->
+                                  <img
+                                          src="/img/mic.png" width=20px height=20px
+                                  />
                               </button>
+                             <!-- onmouseover="this.style.backgroundColor='#f00';"
+                                 onmouseout="this.style.backgroundColor='#5bc0de';"-->
+
                           </span>
-                        <input type="text"  id="txt" ng-model="FromUser" class="form-control"  value="" placeholder=" Название города"
+                        <input type="text" id="txt"
+                               ng-model="FromUser"
+                               class="form-control"
+                               value=""
+                               placeholder=" Название города"
                                style="outline: none;
                                background: #fff;
-                               border-radius: 25px"
-                        >
-                               <!--
-                                  onBlur="this.value = this.value"
-                                  style="
-                               outline: none;
-                               border: 2px solid #222;
-                               /*padding: 5px 100px 5px 30px;*/
-                               display: block;
-                               width: 100%;
-                               height: 50px;
-                               background: #fff;
-                               border-radius: 25px;"
-                               >-->
-                          <!--     -->
+                               border-radius: 25px">
+                        <!--
+                           onBlur="this.value = this.value"
+                           style="
+                        outline: none;
+                        border: 2px solid #222;
+                        /*padding: 5px 100px 5px 30px;*/
+                        display: block;
+                        width: 100%;
+                        height: 50px;
+                        background: #fff;
+                        border-radius: 25px;"
+                        >-->
+                        <!--     -->
                     </div><!-- /input-group -->
 
                 </div>
-            <button type="submit" class="btn btn-group-sm btn-info" ng-click="checkCity(FromUser)" style="border-radius: 30px; outline: none;">Продолжить</button>
+                <button type="submit" class="btn btn-group-sm btn-info" ng-click="checkCity(FromUser)"
+                        style="border-radius: 30px; outline: none;">Продолжить
+                </button>
 
-</div>
+            </div>
         </div>
 
     </div>

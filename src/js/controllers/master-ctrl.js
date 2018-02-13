@@ -416,6 +416,7 @@ function TableCtrl($scope, gameService) {
 function MapCtrl($scope, gameService) {
 
     $scope.gameService = gameService;
+    $scope.myMap;
     $scope.map = ymaps.ready(function () {
 
         //Узнавать координаты
@@ -431,16 +432,34 @@ function MapCtrl($scope, gameService) {
          console.log(myGeocoder);
          */
 
-        // В функцию поступает пространство имен, которое содержит все запрощенные при инициализации модули.
-        var myMap = new ymaps.Map('map', {
+
+        $scope.myMap = new ymaps.Map('map', {
             center: [30, 20],
             zoom: 2
-            // В данном примере карта создается без контролов, так как те не были загружены при инициализации API.
-
         });
-        myMap.behaviors.disable('scrollZoom');
-        myMap.controls.remove('searchControl');
-        myMap.controls.remove('trafficControl');
+        /*        myGeoObject = new ymaps.GeoObject({
+         geometry: {
+         type: "Point", // тип геометрии - точка
+         coordinates: [55.8, 37.8] // координаты точки
+         }
+         });
+         myMap.geoObjects.add(myGeoObject);*/
+
+        /*var myPlacemark = new ymaps.Placemark([2.8, 37.6]);
+         myMap.geoObjects.add(myPlacemark);*/
+
+        $scope.myMap.behaviors.disable('scrollZoom');
+        $scope.myMap.controls.remove('searchControl');
+        $scope.myMap.controls.remove('trafficControl');
+
+        /*for (var i=0; i<=$scope.cityAll.length; i++) {
+            var myPlacemark = new ymaps.Placemark([$scope.coordinate[0], $scope.coordinate[1]], {
+                hintContent: $scope.infoCity,
+                balloonContent: $scope.coordinate
+            });
+            $scope.myMap.geoObjects.add(myPlacemark);
+        }*/
+
 
     });
 
@@ -470,15 +489,11 @@ function MapCtrl($scope, gameService) {
                 console.log("цвет")
             }
             recognition.onend = function () {
-
-                document.getElementById('txt').value = $scope.speech||"";
+                document.getElementById('txt').value = $scope.speech || "";
                 console.log('Крайний ' + gameService.lastCity);
-                // document.getElementById('color').style.backgroundColor = '#db0ffe';
-                $scope.color = true/*'#5bc0de'*/;
-                // document.getElementById('color').style="background-color: #5bc0de; border-radius: 50px;";
-                document.getElementById('color').style.backgroundColor = '#5bc0de';
+                $scope.color = true;
+                document.getElementById('color').style.background = 'none';
                 console.log("конец");
-
                 document.getElementById('color').onmouseover = "this.style.backgroundColor='#f00';";
                 document.getElementById('color').onmouseout = "this.style.backgroundColor='#5bc0de';";
                 var I = document.getElementById('txt');
@@ -489,6 +504,8 @@ function MapCtrl($scope, gameService) {
             var start = function () {
                 console.log("Start");
                 document.getElementById('color').style.backgroundColor = '#f00';
+                // document.getElementById('color').style.border=" 1px groove black";
+                // document.getElementById('color').src = '/img/mic_rec.png';
 
                 $scope.color = false/*'#f00'*/;
                 recognition.start();
@@ -503,7 +520,7 @@ function MapCtrl($scope, gameService) {
     };
 
     $scope.checkCity = function (cityX) {
-         cityX = cityX || $scope.speech;
+        cityX = cityX || $scope.speech;
         if (cityX) {
             if (cityX.slice(0, 1) === cityX.slice(0, 1).toLowerCase()) {
                 alert(" Введите город с ЗАГЛАВНОЙ буквы ")
@@ -512,8 +529,12 @@ function MapCtrl($scope, gameService) {
                     if (gameService.cityAll.indexOf(cityX) > 0) {
                         alert('Такой город уже был, введите другой')
                     } else {
-                        $scope.game(cityX);
-                        $scope.reset();
+                        if (/[0-9`~!@#$%^&*()_=+\\|\[\]{};:'",.<>\/?]/.test(cityX)) {
+                            alert('Обнаружены недопустимые символы ');
+                        } else {
+                            $scope.game(cityX);
+                            $scope.reset();
+                        }
                     }
                 } else {
                     alert(" Введите город на русском языке ")
@@ -525,8 +546,44 @@ function MapCtrl($scope, gameService) {
 
     };
 
+    /*  $scope.game(cityX);
+     $scope.reset();*/
+
+    $scope.locationCity = function (cityX) {
+        cityX = cityX || $scope.speech;
+        var myGeocoder = ymaps.geocode(cityX);
+        myGeocoder.then(
+            function (res) {
+                console.log('Координаты объекта :' + res.geoObjects.get(0).geometry.getCoordinates());
+
+                $scope.constructor(res.geoObjects.get(0).geometry.getCoordinates(), cityX);
+
+            },
+            function (err) {
+                alert('Что-то пошло не так:(');
+            }
+        );
+        // console.log(myGeocoder);
+    };
+
+    $scope.coordinate;
+    $scope.infoCity;
+
+    $scope.constructor = function (cityX, cityX2) {
+        console.log(cityX);
+        console.dir(cityX);
+        $scope.coordinate = cityX;
+        $scope.infoCity = cityX2;
+        var myPlacemark = new ymaps.Placemark([cityX[0], cityX[1]], {
+            hintContent: cityX2,
+            balloonContent: cityX
+        });
+
+        $scope.myMap.geoObjects.add(myPlacemark);
+    };
+
     $scope.isCyrillic = function (text) {
-        return /[а-я]/i.test(text);
+        return /[а-яё]/i.test(text);
     };
 
     $scope.game = function (fromUser) {
@@ -539,10 +596,11 @@ function MapCtrl($scope, gameService) {
                 return alert(" Введите город на букву " + fromComp.toUpperCase())
             }
         }
+        $scope.locationCity(fromUser);
         gameService.cityFromUser.push(fromUser);
         gameService.cityAll.push(fromUser);
         clearTimeout(gameService.setTimer);
-        $scope.compucterStep(fromUser);
+       $scope.compucterStep( fromUser)
     };
 
     $scope.reset = function () {
@@ -556,16 +614,19 @@ function MapCtrl($scope, gameService) {
         }
         for (var i = 0; i < gameService.cityComputerAll.length; i++) {
             if (x === gameService.cityComputerAll[i].slice(0, 1).toLowerCase()) {
+
                 gameService.cityComputer.push(gameService.cityComputerAll[i]);
                 gameService.cityAll.push(gameService.cityComputerAll[i]);
                 gameService.cityComputerAll.splice(i, 1);
                 gameService.lastCity = gameService.cityAll[gameService.cityAll.length - 1];
                 gameService.warn = " У Вас есть 1 минута. Текущий город ";
+
                 gameService.setTimer = setTimeout(function () {
                     gameService.won = ' В следующий раз повезет. Попробуй снова ';
                     $scope.hide();
                     window.location.href = '#/tables'
                 }, 60000);
+                $scope.locationCity(gameService.cityComputerAll[i]);
                 break
             } else if (!gameService.cityComputerAll[i + 1]) {
                 gameService.won = "Поздравляем!!! Вы победили!";
