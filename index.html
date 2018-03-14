@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru" ng-app="RDash">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+
+  <title>ГОРОДА</title>
+  <!--Icon-->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <!-- STYLES -->
+  <link rel="stylesheet" href="lib/css/main.min.css"/>
+  <!-- SCRIPTS -->
+  <script src="lib/js/main.min.js"></script>
+  <!-- Custom Scripts -->
+  <script type="text/javascript" src="js/dashboard.min.js"></script>
+
+  <!--MAP-->
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
+  <!--speechkit--->
+
+
+</head>
+<body ng-controller="MasterCtrl">
+
+  <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <ul class="sidebar">
+        <li class="sidebar-main">
+          <a ng-click="toggleSidebar()">
+            Меню
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+          </a>
+        </li>
+
+        <li class="sidebar-list" >
+          <a href="#">Главная <span class="menu-icon glyphicon glyphicon-globe"></span></a>
+        </li>
+        <li class="sidebar-list">
+        <a href="#/tables">История ввода <span class="menu-icon glyphicon glyphicon-list-alt"></span></a>
+      </li>
+        <li class="sidebar-list">
+          <a href="#/about">О нас <span class="menu-icon glyphicon glyphicon-envelope"></span></a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="col-xs-6">
+          <a href="https://github.com/PrivateProperty/Game.git" target="_blank">
+            Github
+          </a>
+        </div>
+        <div class="col-xs-6">
+          <a href="#/about" >
+            About
+          </a>
+        </div>
+
+      </div>
+    </div>
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+      <div class="page-content">
+
+        <!-- Header Bar -->
+        <div class="row header">
+          <div class="col-xs-12">
+
+            <div class="meta">
+              <div class="page">
+                <h4>ГОРОДА</h4>
+             </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- End Header Bar -->
+
+        <!-- Main Content -->
+        <div ui-view></div>
+
+      </div><!-- End Page Content -->
+    </div><!-- End Content Wrapper -->
+  </div><!-- End Page Wrapper -->
+</body>
+</html>
